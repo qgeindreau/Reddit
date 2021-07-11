@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Liste d'abonnements | SNIS</title>{% endblock %}
+
+{% block content %}
+
+{% include "includes/page_heading.html" with text="Subscription List" %}
+<div class="alert alert-light text-center" role="alert">
+  Souscrivez aux catégories qui vous intéressent pour avoir leur actualité.
+</div>
+{% if subscriptions %}
+  {% include "includes/partial_board.html" with boards=subscriptions %}
+{% else %}
+  <div class="card p-4 my-4 mx-0">
+    <h6 class="text-center">Pas d'abonnements trouvé.</h6>
+    <div style="margin:0 auto;">
+    <p class="text-muted">VOus n'avez souscrit à aucune catégorie.</p>
+    </div>
+  </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Catégorie abonnés | subscriptions</title>{% endblock %}
+
+{% block content %}
+
+{% include "includes/page_heading.html" with text="Subscribe Boards" %}
+<div class="alert alert-light text-center" role="alert">
+  Cliquer sur <span class="font-weight-bold">S'abonner'</span> pour recevoir les actualités.
+</div>
+{% if boards %}
+  {% include "includes/partial_board.html" with boards=boards %}
+{% else %}
+  <div class="card p-4 my-4 mx-0">
+    <h6 class="text-center">PAs de catégorie trouvé.</h6>
+    <div style="margin:0 auto;">
+    <p class="text-muted">Il n'y a pas de catégorie créer encore.</p>
+    </div>
+  </div>
+{% endif %}
+
+{% endblock %}

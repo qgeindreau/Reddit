@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load boards_tags %}
+{% load humanize %}
+{% block title %}<title>Signalement | SNIS</title>{% endblock %}
+
+{% block content %}
+
+{% include "includes/page_heading.html" with text="Reports" %}
+<p class="text-muted text-center">
+  Gardez la catégorie saine.<br/>
+  Supprimer / bannir ce qui n'est pas souhaiter.
+</p>
+
+{% for report in reports %}
+<div class="card mb-2" style="border:none; border-bottom:1px solid #dcd7d7;">
+  <div class="card-body p-4">
+    {% if report.subject %}
+      <h6>
+        <a href="{{ report.subject.get_absolute_url }}">{{report}}</a>
+      </h6>
+      <br>
+      <a href="{% url 'deactivate_subject' report.subject.slug %}" class="btn btn-outline-primary btn-sm">Supprimer</a>
+      <a href="{% url 'ban_user' report.subject.board.slug report.subject.author.id %}" class="btn btn-outline-danger btn-sm">Bannir auteur</a>
+    {% else %}
+      <h6>
+        <a href="{{ report.comment.subject.get_absolute_url }}">{{report}}</a>
+      </h6>
+      <br>
+      <a href="{% url 'deactivate_comment' report.comment.id %}" class="btn btn-outline-primary btn-sm">Supprimer</a>
+      <a href="{% url 'ban_user' report.comment.subject.board.slug report.comment.commenter.id %}" class="btn btn-outline-danger btn-sm">Bannir le commenteur</a>
+    {% endif %}
+    <div style="float:right;">
+      <p class="text-muted">
+        Signalé <span>{{report.created|naturaltime}}</span> by <a href="{% url 'user_profile' report.reporter.username %}">{{report.reporter.profile.screen_name}}</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}
